@@ -1,5 +1,14 @@
 /* All SVG/visual diagrams for the bootcamp */
 
+/* Mobile-safe SVG wrapper — scrolls horizontally on small screens */
+function SvgScroll({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' as 'touch' }}>
+      {children}
+    </div>
+  )
+}
+
 /* ── OSI Model ───────────────────────────────────────────────── */
 export function OSIModel() {
   const layers = [
@@ -143,7 +152,7 @@ export function ProbeRequestFlow() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-5" style={{ color: 'var(--color-text-faint)' }}>
         Probe Request / Response Flow
       </div>
-      <svg viewBox="0 0 600 200" className="w-full" style={{ maxHeight: '200px' }}>
+      <SvgScroll><svg viewBox="0 0 600 200" style={{ width: '100%', minWidth: '480px', maxHeight: '200px', display: 'block' }}>
         {/* Phone/client */}
         <rect x="20" y="60" width="80" height="80" rx="8" fill="oklch(18% 0.02 240)" stroke="var(--color-steel)" strokeWidth="1.5"/>
         <text x="60" y="95" textAnchor="middle" fill="var(--color-steel)" fontSize="10" fontFamily="var(--font-display)" fontWeight="600">Client</text>
@@ -185,7 +194,7 @@ export function ProbeRequestFlow() {
         <text x="525" y="153" textAnchor="middle" fill="var(--color-red)" fontSize="10" fontFamily="var(--font-display)" fontWeight="600">Evil Twin</text>
         <text x="525" y="166" textAnchor="middle" fill="var(--color-red)" fontSize="9">Cardputer AP</text>
         <text x="525" y="177" textAnchor="middle" fill="var(--color-text-faint)" fontSize="7">stronger signal</text>
-      </svg>
+      </svg></SvgScroll>
     </div>
   )
 }
@@ -197,7 +206,7 @@ export function HandshakeDiagram() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-faint)' }}>
         WPA2 EAPOL 4-Way Handshake
       </div>
-      <svg viewBox="0 0 560 280" className="w-full" style={{ maxHeight: '280px' }}>
+      <SvgScroll><svg viewBox="0 0 560 280" style={{ width: "100%", minWidth: "480px", maxHeight: "280px", display: "block" }}>
         {/* Columns */}
         <text x="110" y="22" textAnchor="middle" fill="var(--color-steel)" fontSize="11" fontFamily="var(--font-display)" fontWeight="600">Client (STA)</text>
         <text x="450" y="22" textAnchor="middle" fill="var(--color-green)" fontSize="11" fontFamily="var(--font-display)" fontWeight="600">Access Point (AP)</text>
@@ -245,7 +254,7 @@ export function HandshakeDiagram() {
 
         {/* Sniff label */}
         <text x="280" y="270" textAnchor="middle" fill="var(--color-red)" fontSize="9">⚡ Capturing MSG 2 (SNonce+MIC) allows offline dictionary attack</text>
-      </svg>
+      </svg></SvgScroll>
     </div>
   )
 }
@@ -257,7 +266,7 @@ export function DeauthDiagram() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-faint)' }}>
         Deauthentication Attack — 802.11 Management Frame Abuse
       </div>
-      <svg viewBox="0 0 580 200" className="w-full" style={{ maxHeight: '200px' }}>
+      <SvgScroll><svg viewBox="0 0 580 200" style={{ width: "100%", minWidth: "480px", maxHeight: "200px", display: "block" }}>
         {/* Cardputer */}
         <rect x="10" y="65" width="110" height="70" rx="8" fill="oklch(14% 0.015 25 / 0.3)" stroke="var(--color-red)" strokeWidth="1.5"/>
         <text x="65" y="90" textAnchor="middle" fill="var(--color-red)" fontSize="10" fontFamily="var(--font-display)" fontWeight="700">Cardputer</text>
@@ -301,7 +310,7 @@ export function DeauthDiagram() {
         <text x="515" y="134" textAnchor="middle" fill="var(--color-text-faint)" fontSize="7">Captures EAPOL</text>
         <text x="515" y="145" textAnchor="middle" fill="var(--color-text-faint)" fontSize="7">frames during</text>
         <text x="515" y="156" textAnchor="middle" fill="var(--color-text-faint)" fontSize="7">re-association</text>
-      </svg>
+      </svg></SvgScroll>
       <div className="mt-3 text-[11px] p-3 rounded" style={{ background: 'oklch(14% 0.015 25 / 0.3)', border: '1px solid var(--color-red-dim)', color: 'var(--color-text-faint)' }}>
         <span style={{ color: 'var(--color-red)' }}>Key insight:</span> 802.11 management frames (including deauth) are <strong style={{ color: 'var(--color-text)' }}>unauthenticated by default</strong> in WPA2. Anyone can forge them. WPA3 introduces Management Frame Protection (MFP/802.11w) to address this.
       </div>
@@ -316,7 +325,7 @@ export function EvilTwinDiagram() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-faint)' }}>
         Evil Twin + Captive Portal Attack Chain
       </div>
-      <svg viewBox="0 0 580 230" className="w-full" style={{ maxHeight: '230px' }}>
+      <SvgScroll><svg viewBox="0 0 580 230" style={{ width: "100%", minWidth: "480px", maxHeight: "230px", display: "block" }}>
         {/* Steps numbered */}
         {[
           { n: '1', x: 30,  y: 30,  label: 'Scan & Clone', sub: 'Copy real AP SSID' },
@@ -374,7 +383,7 @@ export function EvilTwinDiagram() {
         <line x1="365" y1="182" x2="220" y2="195" stroke="var(--color-amber)" strokeWidth="1" strokeDasharray="3,2"/>
         <polygon points="220,192 208,197 222,200" fill="var(--color-amber)"/>
         <text x="190" y="215" textAnchor="middle" fill="var(--color-amber)" fontSize="8">Logged to /SD/evil/credentials.txt</text>
-      </svg>
+      </svg></SvgScroll>
     </div>
   )
 }
@@ -386,7 +395,7 @@ export function DHCPDiagram() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-faint)' }}>
         DHCP Protocol & Starvation Attack
       </div>
-      <svg viewBox="0 0 580 220" className="w-full" style={{ maxHeight: '220px' }}>
+      <SvgScroll><svg viewBox="0 0 580 220" style={{ width: "100%", minWidth: "480px", maxHeight: "220px", display: "block" }}>
         {/* Normal DHCP flow (top) */}
         <text x="10" y="20" fill="var(--color-green)" fontSize="10" fontWeight="600" fontFamily="var(--font-display)">Normal DHCP (DORA)</text>
 
@@ -453,7 +462,7 @@ export function DHCPDiagram() {
         <text x="280" y="172" textAnchor="middle" fill="var(--color-text-muted)" fontSize="8" fontWeight="600">Real Client</text>
         <text x="280" y="183" textAnchor="middle" fill="var(--color-red)" fontSize="7">DISCOVER → No OFFER</text>
         <text x="280" y="192" textAnchor="middle" fill="var(--color-text-faint)" fontSize="7">Network DoS!</text>
-      </svg>
+      </svg></SvgScroll>
     </div>
   )
 }
@@ -465,7 +474,7 @@ export function NTLMDiagram() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-faint)' }}>
         LLMNR/NBT-NS Poisoning + NTLM Credential Capture
       </div>
-      <svg viewBox="0 0 580 230" className="w-full" style={{ maxHeight: '230px' }}>
+      <SvgScroll><svg viewBox="0 0 580 230" style={{ width: "100%", minWidth: "480px", maxHeight: "230px", display: "block" }}>
         {/* Client */}
         <rect x="10" y="85" width="100" height="60" rx="6" fill="oklch(15% 0.015 220 / 0.3)" stroke="var(--color-steel)" strokeWidth="1.5"/>
         <text x="60" y="110" textAnchor="middle" fill="var(--color-steel)" fontSize="9" fontWeight="600">Windows Client</text>
@@ -506,7 +515,7 @@ export function NTLMDiagram() {
         <text x="290" y="188" textAnchor="middle" fill="var(--color-amber)" fontSize="9" fontWeight="700">NTLMv2 Hash Captured!</text>
         <text x="290" y="200" textAnchor="middle" fill="var(--color-text-faint)" fontSize="7">admin::WORKGROUP:a3f7b2...  (saved to SD card)</text>
         <text x="290" y="211" textAnchor="middle" fill="var(--color-text-faint)" fontSize="7">Crack offline with hashcat -m 5600</text>
-      </svg>
+      </svg></SvgScroll>
     </div>
   )
 }
@@ -519,7 +528,7 @@ export function ChannelSpectrum() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-faint)' }}>
         2.4 GHz Channel Spectrum — 22 MHz wide channels (only 1, 6, 11 are non-overlapping)
       </div>
-      <svg viewBox="0 0 560 160" className="w-full" style={{ maxHeight: '160px' }}>
+      <SvgScroll><svg viewBox="0 0 560 160" style={{ width: "100%", minWidth: "460px", maxHeight: "160px", display: "block" }}>
         {/* Background */}
         <rect x="30" y="10" width="520" height="100" rx="4" fill="oklch(12% 0.01 240)" opacity="0.5"/>
         {/* Channels as bell curves (simplified as trapezoids) */}
@@ -559,7 +568,7 @@ export function ChannelSpectrum() {
         <text x="88" y="156" fill="var(--color-green)" fontSize="8">Non-overlapping (use these for AP placement)</text>
         <circle cx="370" cy="152" r="4" fill="var(--color-red)" opacity="0.3"/>
         <text x="378" y="156" fill="var(--color-text-faint)" fontSize="8">Overlapping (causes interference)</text>
-      </svg>
+      </svg></SvgScroll>
     </div>
   )
 }
@@ -571,7 +580,7 @@ export function MITMDiagram() {
       <div className="text-[10px] font-mono uppercase tracking-widest mb-4" style={{ color: 'var(--color-text-faint)' }}>
         Man-in-the-Middle via Rogue DHCP + DNS Hijack
       </div>
-      <svg viewBox="0 0 560 180" className="w-full" style={{ maxHeight: '180px' }}>
+      <SvgScroll><svg viewBox="0 0 560 180" style={{ width: "100%", minWidth: "460px", maxHeight: "180px", display: "block" }}>
         {/* Internet */}
         <circle cx="70" cy="90" r="35" fill="oklch(14% 0.01 240)" stroke="var(--color-border)" strokeWidth="1"/>
         <text x="70" y="87" textAnchor="middle" fill="var(--color-text-faint)" fontSize="9">Internet</text>
@@ -609,7 +618,7 @@ export function MITMDiagram() {
         {/* MITM traffic flows */}
         <text x="315" y="148" textAnchor="middle" fill="var(--color-amber)" fontSize="9">All victim traffic: Internet → Cardputer → Router → Internet</text>
         <text x="315" y="162" textAnchor="middle" fill="var(--color-text-faint)" fontSize="8">HTTP visible in plaintext · DNS resolved to fake IPs · Cookies sniffable</text>
-      </svg>
+      </svg></SvgScroll>
     </div>
   )
 }

@@ -149,7 +149,7 @@ ENTER`}</Code>
         {[
           { name: 'BLE scanner pollution', desc: 'Any Bluetooth scanner (phones, diagnostic tools) sees hundreds of fake BLE devices — similar to beacon spam for WiFi. Makes legitimate BLE devices hard to find.' },
           { name: 'BLE DoS (minor)', desc: 'BLE scanning is battery-intensive. Flooding causes nearby devices to wake their radios repeatedly, draining battery faster than normal.' },
-          { name: 'Privacy research', desc: 'Demonstrates how easily BLE space can be polluted. Shows workshop participants how ubiquitous BLE advertising is — every AirPod, smartwatch, fitness tracker is constantly advertising.' },
+          { name: 'Privacy research', desc: 'Demonstrates how easily BLE space can be polluted. Illustrates how ubiquitous BLE advertising is — every AirPod, smartwatch, and fitness tracker is constantly broadcasting its presence.' },
           { name: 'Flipper-trolling', desc: 'Originally popularized by Flipper Zero spam features. iOS 17+ added protections against Bluetooth advertisement flooding (the "iPhone Bluetooth storm" vulnerability is patched).', },
         ].map(item => (
           <div key={item.name} className="p-3 rounded-lg" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border-subtle)' }}>

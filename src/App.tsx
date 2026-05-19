@@ -46,10 +46,20 @@ export default function App() {
   const [active, setActive] = useState<ModuleId>('hardware')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
+  const scrollPositions = useRef<Partial<Record<ModuleId, number>>>({})
+
+  const go = (id: ModuleId) => {
+    // Save scroll position of the current module before leaving
+    if (contentRef.current) {
+      scrollPositions.current[active] = contentRef.current.scrollTop
+    }
+    setActive(id)
+    setSidebarOpen(false)
+  }
 
   useEffect(() => {
-    contentRef.current?.scrollTo({ top: 0, behavior: 'instant' })
-    setSidebarOpen(false)
+    const saved = scrollPositions.current[active] ?? 0
+    contentRef.current?.scrollTo({ top: saved, behavior: 'instant' })
   }, [active])
 
   const currentIdx = NAV.findIndex(n => n.id === active)
@@ -98,7 +108,7 @@ export default function App() {
             return (
               <button
                 key={item.id}
-                onClick={() => { setActive(item.id); setSidebarOpen(false) }}
+                onClick={() => go(item.id)}
                 className="w-full text-left px-3 py-2 rounded mb-0.5 flex items-center gap-3 transition-all duration-150 group"
                 style={{
                   background: isActive ? 'var(--color-surface-raised)' : 'transparent',
@@ -133,28 +143,38 @@ export default function App() {
       </aside>
 
       {/* Main area */}
-      <div className="flex-1 flex flex-col min-h-screen" style={{ marginLeft: '0' }}>
+      <div className="flex-1 flex flex-col" style={{ marginLeft: '0', minHeight: 0 }}>
         <style>{`@media (min-width: 1024px) { .main-offset { margin-left: 272px; } }`}</style>
-        <div className="main-offset flex flex-col min-h-screen">
-          {/* Mobile bar */}
-          <div className="lg:hidden sticky top-0 z-20 flex items-center gap-3 px-4 py-3" style={{ borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface)' }}>
-            <button onClick={() => setSidebarOpen(true)} className="p-1.5 rounded" style={{ color: 'var(--color-text-muted)' }}>
-              <Menu size={18} />
+        <div className="main-offset flex flex-col" style={{ minHeight: '100vh' }}>
+          {/* Mobile top bar */}
+          <div className="lg:hidden sticky top-0 z-20 flex items-center gap-3 px-4 py-3.5" style={{ borderBottom: '1px solid var(--color-border)', background: 'var(--color-surface)' }}>
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 -ml-1 rounded-lg"
+              style={{ color: 'var(--color-text-muted)', minWidth: '44px', minHeight: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              aria-label="Open menu"
+            >
+              <Menu size={20} />
             </button>
-            <span className="text-sm" style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--color-text)' }}>
-              {NAV.find(n => n.id === active)?.label}
-            </span>
+            <div className="min-w-0">
+              <div className="text-sm truncate" style={{ fontFamily: 'var(--font-display)', fontWeight: 600, color: 'var(--color-text)' }}>
+                {NAV.find(n => n.id === active)?.label}
+              </div>
+              <div className="text-[10px]" style={{ color: 'var(--color-text-faint)' }}>
+                {NAV.find(n => n.id === active)?.subtitle}
+              </div>
+            </div>
           </div>
 
-          <div ref={contentRef} className="flex-1">
-            <div className="max-w-4xl mx-auto px-5 py-10 lg:px-10 module-enter" key={active}>
+          <div ref={contentRef} className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}>
+            <div className="max-w-4xl mx-auto px-4 py-8 sm:px-6 lg:px-10 module-enter" key={active}>
               {MODULES[active]}
             </div>
 
             {/* Prev/Next */}
             <div className="max-w-4xl mx-auto px-5 lg:px-10 pb-16 flex justify-between gap-4">
               {prev ? (
-                <button onClick={() => setActive(prev.id)}
+                <button onClick={() => go(prev.id)}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-colors text-sm group"
                   style={{ border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-amber-dim)'; (e.currentTarget as HTMLElement).style.color = 'var(--color-amber)' }}
@@ -168,7 +188,7 @@ export default function App() {
                 </button>
               ) : <div />}
               {next ? (
-                <button onClick={() => setActive(next.id)}
+                <button onClick={() => go(next.id)}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-colors text-sm group ml-auto"
                   style={{ border: '1px solid var(--color-border)', color: 'var(--color-text-muted)' }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-amber-dim)'; (e.currentTarget as HTMLElement).style.color = 'var(--color-amber)' }}

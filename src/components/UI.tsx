@@ -65,16 +65,16 @@ export function Code({ children, label }: { children: string; label?: string }) 
   return (
     <div className="rounded-lg overflow-hidden my-4" style={{ border: '1px solid var(--color-border)' }}>
       {label && (
-        <div className="px-4 py-1.5 flex items-center gap-2" style={{ background: 'var(--color-surface-raised)', borderBottom: '1px solid var(--color-border)' }}>
-          <div className="flex gap-1.5">
-            <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'var(--color-red-dim)' }} />
-            <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'var(--color-amber-dim)' }} />
-            <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'var(--color-green-dim)' }} />
+        <div className="px-3 py-1.5 flex items-center gap-2" style={{ background: 'var(--color-surface-raised)', borderBottom: '1px solid var(--color-border)' }}>
+          <div className="flex gap-1.5 flex-shrink-0">
+            <div className="w-2 h-2 rounded-full" style={{ background: 'var(--color-red-dim)' }} />
+            <div className="w-2 h-2 rounded-full" style={{ background: 'var(--color-amber-dim)' }} />
+            <div className="w-2 h-2 rounded-full" style={{ background: 'var(--color-green-dim)' }} />
           </div>
-          <span className="text-[10px] font-mono ml-2" style={{ color: 'var(--color-text-faint)' }}>{label}</span>
+          <span className="text-[10px] font-mono ml-1 truncate" style={{ color: 'var(--color-text-faint)' }}>{label}</span>
         </div>
       )}
-      <pre className="p-4 overflow-x-auto text-sm leading-relaxed" style={{ background: 'var(--color-surface)', fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)', margin: 0 }}>
+      <pre className="p-3 sm:p-4 overflow-x-auto text-xs sm:text-sm leading-relaxed" style={{ background: 'var(--color-surface)', fontFamily: 'var(--font-mono)', color: 'var(--color-text-muted)', margin: 0, WebkitOverflowScrolling: 'touch' }}>
         <code>{children}</code>
       </pre>
     </div>
@@ -94,16 +94,18 @@ export function IC({ children }: { children: React.ReactNode }) {
 export function SpecTable({ rows }: { rows: [string, string][] }) {
   return (
     <div className="rounded-lg overflow-hidden my-5" style={{ border: '1px solid var(--color-border)' }}>
-      <table className="w-full text-sm">
-        <tbody>
-          {rows.map(([k, v], i) => (
-            <tr key={i} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--color-border-subtle)' : 'none' }}>
-              <td className="px-4 py-2.5 w-2/5 font-mono text-xs" style={{ color: 'var(--color-amber-dim)', background: 'var(--color-surface)' }}>{k}</td>
-              <td className="px-4 py-2.5" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg)' }}>{v}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm" style={{ minWidth: '360px' }}>
+          <tbody>
+            {rows.map(([k, v], i) => (
+              <tr key={i} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--color-border-subtle)' : 'none' }}>
+                <td className="px-3 py-2.5 font-mono text-xs whitespace-nowrap" style={{ color: 'var(--color-amber-dim)', background: 'var(--color-surface)', width: '38%' }}>{k}</td>
+                <td className="px-3 py-2.5 text-xs" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg)' }}>{v}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

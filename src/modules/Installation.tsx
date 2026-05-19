@@ -29,7 +29,7 @@ export default function ModuleInstallation() {
 
       <Divider />
 
-      <SectionH>Method A — M5Burner (Recommended for Workshop)</SectionH>
+      <SectionH>Method A — M5Burner (Recommended for Beginners)</SectionH>
       <Steps steps={[
         {
           title: 'Download M5Burner',
@@ -54,7 +54,7 @@ export default function ModuleInstallation() {
       ]} />
 
       <Callout kind="tip">
-        During workshops: pre-flash all Cardputers and prepare SD cards in advance. Flashing via M5Burner over a shared WiFi network can be slow. Use a USB hub with multiple ports.
+        If setting up multiple devices at once: pre-flash each Cardputer and prepare SD cards in advance. Flashing via M5Burner over a shared WiFi network can be slow. Use a USB hub with multiple ports.
       </Callout>
 
       <SectionH>Method C — Arduino IDE (Source Compilation)</SectionH>
