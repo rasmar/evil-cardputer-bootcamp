@@ -19,7 +19,7 @@ export default function ModuleHardware() {
       </p>
 
       <Callout kind="info">
-        Unlike a laptop running Kali, the Cardputer draws ~150 mA from its 130 mAh battery — giving roughly 45–90 minutes
+        Unlike a laptop running Kali, the Cardputer draws ~150 mA from its 120 mAh battery — giving roughly 45–90 minutes
         of active operation, or much longer in passive/sniffing modes. An external USB power bank dramatically extends field time.
       </Callout>
 
@@ -27,7 +27,7 @@ export default function ModuleHardware() {
       <SpecTable rows={[
         ['MCU',              'ESP32-S3FN8 (Xtensa LX7 dual-core, 240 MHz)'],
         ['Flash',            '8 MB on-chip Flash (SPIFFS partition for Evil-M5)'],
-        ['PSRAM',            '8 MB (used by audio / LLM module — disable for Evil-M5)'],
+        ['PSRAM',            'None — ESP32-S3FN8 has no embedded PSRAM (set PSRAM: Disabled in Arduino IDE)'],
         ['WiFi',             '802.11 b/g/n 2.4 GHz (HT20/HT40), monitor mode capable'],
         ['Bluetooth',        'BLE 5.0 + Classic BT (Bluetooth HID supported)'],
         ['Display',          '1.14" IPS LCD, 240×135 px, ST7789V2 driver'],
@@ -36,7 +36,7 @@ export default function ModuleHardware() {
         ['USB',              'USB-C, OTG capable (BadUSB / HID emulation)'],
         ['Infrared',         'IR TX (850 nm) — not used by Evil-M5 by default'],
         ['Microphone',       'SPM1423 PDM mic (for audio/LLM module)'],
-        ['Battery',          '130 mAh LiPo (internal), charges via USB-C'],
+        ['Battery',          '120 mAh LiPo (internal), charges via USB-C'],
         ['Expansion Port',   'Grove (I2C+UART), GPIO header — add GPS, RF modules'],
       ]} />
 
